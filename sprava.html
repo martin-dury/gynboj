@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Správa dovoleniek | GYNBOJ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFF9F8; --blush: #F6E1DE; --blush-2: #FBEEEC; --lilac: #ECE4EF;
+  --ink: #2D1B2A; --ink-2: #5A4757; --muted: #86737F; --line: #EAD7D4;
+  --berry: #8E2E5B; --berry-dark: #6F1F45; --sage: #4F7D62; --sage-soft: #DDEBE1; --white: #FFFFFF;
+  --off-bg: #F1ECEE; --err: #B3261E; --err-bg: #FBE3E1;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --text: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gut: clamp(16px, 4vw, 40px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 17px; line-height: 1.55; overflow-x: hidden; }
+:focus-visible { outline: 3px solid var(--berry); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+p { margin: 0; }
+[hidden] { display: none !important; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 var(--gut); }
+
+.top { border-bottom: 1px solid var(--line); background: rgba(255,249,248,.95); position: sticky; top: 0; z-index: 10; }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 70px; }
+.brand { display: flex; align-items: baseline; gap: 12px; text-decoration: none; color: inherit; }
+.brand-mark { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: 28px; color: var(--berry); line-height: 1; }
+.brand-sub { font-size: 14px; color: var(--muted); }
+.who { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--ink-2); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 10px 22px; font: 700 16px/1.2 var(--text); text-decoration: none; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s; }
+.btn-primary { background: var(--berry); color: #fff; }
+.btn-primary:hover { background: var(--berry-dark); }
+.btn-primary:disabled { opacity: .5; cursor: wait; }
+.btn-soft { background: var(--white); color: var(--ink); border-color: var(--line); }
+.btn-soft:hover { border-color: var(--ink); }
+.btn-sm { min-height: 40px; padding: 6px 16px; font-size: 15px; }
+.btn-del { background: var(--white); color: var(--err); border-color: #F0C2BE; }
+.btn-del:hover { background: var(--err-bg); }
+
+main { padding: clamp(32px, 5vw, 56px) 0 64px; }
+.head h1 { font-size: clamp(36px, 5.2vw, 60px); font-stretch: 75%; font-weight: 800; letter-spacing: -0.03em; }
+.head p { margin-top: 10px; color: var(--ink-2); max-width: 38em; }
+
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 3.4vw, 34px); margin-top: 26px; position: relative; }
+.card h2 { font-size: clamp(24px, 2.8vw, 30px); font-stretch: 82%; }
+.card > p.sub { color: var(--muted); font-size: 15.5px; margin-top: 6px; }
+
+.login { max-width: 460px; }
+.form { display: grid; gap: 18px; margin-top: 20px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field label { display: block; font-weight: 700; font-size: 15.5px; margin-bottom: 7px; }
+.input { width: 100%; min-height: 52px; padding: 11px 15px; font: 17px/1.3 var(--text); color: var(--ink); background: var(--white); border: 2px solid var(--line); border-radius: 14px; }
+.input:hover { border-color: #D8BEBA; }
+.input:focus { outline: none; border-color: var(--berry); box-shadow: 0 0 0 4px rgba(142,46,91,.14); }
+
+.mode { display: inline-grid; grid-template-columns: 1fr 1fr; background: var(--blush-2); border-radius: 999px; padding: 4px; gap: 4px; }
+.mode label { position: relative; cursor: pointer; }
+.mode input { position: absolute; opacity: 0; }
+.mode span { display: block; padding: 10px 18px; border-radius: 999px; font-weight: 700; font-size: 15.5px; color: var(--ink-2); text-align: center; }
+.mode input:checked + span { background: var(--berry); color: #fff; }
+.mode input:focus-visible + span { outline: 3px solid var(--berry); outline-offset: 2px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 2px solid var(--line); background: var(--white); border-radius: 999px; padding: 6px 14px; font: 700 14.5px var(--text); color: var(--ink-2); cursor: pointer; }
+.chip:hover { border-color: var(--berry); color: var(--berry); }
+
+.preview { background: var(--lilac); border-radius: 16px; padding: 12px 16px; font-size: 15.5px; color: var(--ink-2); }
+.preview strong { color: var(--ink); }
+
+.msg { border-radius: 14px; padding: 13px 17px; font-size: 15.5px; margin-top: 16px; }
+.msg.ok { background: var(--sage-soft); color: #2F5D42; font-weight: 700; }
+.msg.err { background: var(--err-bg); color: #8C1D18; font-weight: 700; }
+.msg.warn { background: #FFF1D6; color: #6B4A00; }
+.msg.warn strong { display: block; margin-bottom: 6px; }
+.msg.warn ul { margin: 6px 0 0; padding-left: 18px; }
+.msg.warn a { color: inherit; font-weight: 700; }
+
+.list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.item { display: grid; grid-template-columns: 6px minmax(0, 1fr) auto; gap: 16px; align-items: center; background: var(--blush-2); border-radius: 18px; padding: 14px 16px 14px 14px; }
+.item::before { content: ""; align-self: stretch; border-radius: 6px; background: #CFC3C9; }
+.item.now::before { background: var(--berry); }
+.item-when { font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
+.item-meta { font-size: 14.5px; color: var(--muted); margin-top: 2px; }
+.tag { display: inline-block; background: var(--berry); color: #fff; border-radius: 999px; font-size: 12.5px; font-weight: 700; padding: 2px 10px; margin-left: 6px; vertical-align: 2px; }
+.empty { margin-top: 16px; background: var(--blush-2); border-radius: 16px; padding: 18px; color: var(--ink-2); }
+
+.spinner { width: 22px; height: 22px; border-radius: 50%; border: 3px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin .8s linear infinite; }
+.spinner.dark { border-color: var(--blush); border-top-color: var(--berry); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading { display: flex; align-items: center; gap: 12px; color: var(--ink-2); margin-top: 18px; }
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: 1fr; }
+  .brand-sub { display: none; }
+  .mode { display: grid; width: 100%; }
+  .item { grid-template-columns: 6px minmax(0, 1fr); }
+  .item .btn { grid-column: 2; justify-self: start; }
+  .who span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="index.html"><span class="brand-mark">GYNBOJ</span><span class="brand-sub">Správa dovoleniek</span></a>
+    <div class="who" id="who" hidden><span id="whoEmail"></span><button type="button" class="btn btn-soft btn-sm" id="logoutBtn">Odhlásiť</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="head">
+    <h1>Dovolenky a voľné dni</h1>
+    <p>Zablokované dni a časy sa v online objednávaní zobrazia sivou farbou a pacientky si ich nebudú môcť rezervovať.</p>
+  </div>
+
+  <!-- PRIHLÁSENIE -->
+  <section class="card login" id="loginCard">
+    <h2>Prihlásenie</h2>
+    <p class="sub">Len pre personál ambulancie.</p>
+    <form class="form" id="loginForm">
+      <div class="field"><label for="l-email">E-mail</label><input class="input" id="l-email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="l-pass">Heslo</label><input class="input" id="l-pass" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-primary" id="loginBtn" type="submit">Prihlásiť sa</button>
+    </form>
+    <div id="loginMsg"></div>
+  </section>
+
+  <div id="app" hidden>
+    <!-- NOVÁ BLOKÁCIA -->
+    <section class="card">
+      <h2>Zablokovať termíny</h2>
+      <p class="sub">Napríklad dovolenka, školenie alebo zatvorená ambulancia.</p>
+      <form class="form" id="blockForm">
+        <div class="mode" role="radiogroup" aria-label="Rozsah">
+          <label><input type="radio" name="mode" value="days" checked><span>Celé dni</span></label>
+          <label><input type="radio" name="mode" value="part"><span>Len časť dňa</span></label>
+        </div>
+
+        <div class="row" id="daysRow">
+          <div class="field"><label for="b-od">Od dňa</label><input class="input" id="b-od" type="date" required></div>
+          <div class="field"><label for="b-do">Do dňa (vrátane)</label><input class="input" id="b-do" type="date" required></div>
+        </div>
+
+        <div id="partRow" hidden>
+          <div class="field"><label for="b-den">Deň</label><input class="input" id="b-den" type="date"></div>
+          <div class="row" style="margin-top:16px">
+            <div class="field"><label for="b-cod">Od</label><input class="input" id="b-cod" type="time" value="07:00" step="60"></div>
+            <div class="field"><label for="b-cdo">Do</label><input class="input" id="b-cdo" type="time" value="10:00" step="60"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="b-dovod">Dôvod <span style="font-weight:400;color:var(--muted)">(vidíte ho len vy)</span></label>
+          <input class="input" id="b-dovod" maxlength="80" value="Dovolenka">
+          <div class="chips" style="margin-top:10px">
+            <button type="button" class="chip">Dovolenka</button>
+            <button type="button" class="chip">Školenie</button>
+            <button type="button" class="chip">Lekár neordinuje</button>
+            <button type="button" class="chip">Iné</button>
+          </div>
+        </div>
+
+        <div class="preview" id="preview"></div>
+        <div><button class="btn btn-primary" id="addBtn" type="submit">Zablokovať</button></div>
+      </form>
+      <div id="addMsg"></div>
+    </section>
+
+    <!-- ZOZNAM -->
+    <section class="card">
+      <h2>Naplánované blokácie</h2>
+      <p class="sub">Po zrušení sa termíny v objednávaní znova uvoľnia.</p>
+      <div id="listWrap"><div class="loading"><div class="spinner dark"></div>Načítavam...</div></div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* Rovnaké údaje ako v objednanie.html */
+var CONFIG = {
+  SUPABASE_URL: "https://dhzetcgbkzwpcbopmvop.supabase.co/",   // napr. "https://abcdxyz.supabase.co"
+  SUPABASE_KEY: "sb_publishable_Fm8QRwGo_rwUUNfNzyUm9Q_KQIVdrk_"    // publishable / anon key
+};
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var BASE = CONFIG.SUPABASE_URL.replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
+  var SKEY = "gynboj_admin_session";
+  var session = null;
+  var MONTHS_GEN = ["januára", "februára", "marca", "apríla", "mája", "júna", "júla", "augusta", "septembra", "októbra", "novembra", "decembra"];
+  var DOWS = ["ne", "po", "ut", "st", "št", "pi", "so"];
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function ymd(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function parseYmd(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function addDays(s, n) { var d = parseYmd(s); d.setDate(d.getDate() + n); return ymd(d); }
+  function nice(s) { var d = parseYmd(s); return DOWS[d.getDay()] + " " + d.getDate() + ". " + (d.getMonth() + 1) + ". " + d.getFullYear(); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function msg(el, kind, html) { $(el).innerHTML = html ? '<div class="msg ' + kind + '">' + html + "</div>" : ""; }
+
+  /* ---------- Prihlásenie (Supabase Auth) ---------- */
+  function saveSession(s) { session = s; try { if (s) localStorage.setItem(SKEY, JSON.stringify(s)); else localStorage.removeItem(SKEY); } catch (e) {} }
+  function loadSession() { try { return JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) { return null; } }
+
+  function authCall(grant, body) {
+    return fetch(BASE + "/auth/v1/token?grant_type=" + grant, {
+      method: "POST", headers: { "Content-Type": "application/json", "apikey": CONFIG.SUPABASE_KEY }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error_description || j.msg || j.message || "AUTH"); return j; }); })
+      .then(function (j) { var s = { access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Date.now() + (j.expires_in - 60) * 1000, email: j.user && j.user.email }; saveSession(s); return s; });
+  }
+  function ensureToken() {
+    if (!session) return Promise.reject(new Error("NO_SESSION"));
+    if (Date.now() < session.expires_at) return Promise.resolve(session.access_token);
+    return authCall("refresh_token", { refresh_token: session.refresh_token }).then(function (s) { return s.access_token; });
+  }
+  function rpc(fn, body) {
+    return ensureToken().then(function (tok) {
+      return fetch(BASE + "/rest/v1/rpc/" + fn, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apikey": CONFIG.SUPABASE_KEY, "Authorization": "Bearer " + tok },
+        body: JSON.stringify(body || {})
+      });
+    }).then(function (r) { return r.text().then(function (t) { var j = t ? JSON.parse(t) : null; if (!r.ok) throw new Error((j && j.message) || ("HTTP " + r.status)); return j; }); });
+  }
+
+  function showApp() {
+    $("loginCard").hidden = true; $("app").hidden = false; $("who").hidden = false;
+    $("whoEmail").textContent = session.email || "";
+    loadList();
+  }
+  function showLogin(text) {
+    saveSession(null);
+    $("loginCard").hidden = false; $("app").hidden = true; $("who").hidden = true;
+    if (text) msg("loginMsg", "err", text);
+  }
+  function handleErr(e, where) {
+    var m = String(e && e.message || "");
+    if (m.indexOf("NOT_ADMIN") > -1) return showLogin("Tento účet nemá oprávnenie spravovať dovolenky.");
+    if (m.indexOf("JWT") > -1 || m.indexOf("NO_SESSION") > -1 || m.indexOf("refresh") > -1) return showLogin("Prihlásenie vypršalo, prihláste sa znova.");
+    msg(where, "err", "Niečo sa nepodarilo (" + esc(m) + "). Skúste to znova.");
+  }
+
+  $("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); msg("loginMsg");
+    var btn = $("loginBtn"); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Prihlasujem...';
+    authCall("password", { email: $("l-email").value.trim(), password: $("l-pass").value })
+      .then(function () { $("l-pass").value = ""; showApp(); })
+      .catch(function (err) { msg("loginMsg", "err", /invalid/i.test(err.message) ? "Nesprávny e-mail alebo heslo." : "Prihlásenie sa nepodarilo: " + esc(err.message)); })
+      .then(function () { btn.disabled = false; btn.textContent = "Prihlásiť sa"; });
+  });
+  $("logoutBtn").addEventListener("click", function () {
+    var tok = session && session.access_token;
+    if (tok) fetch(BASE + "/auth/v1/logout", { method: "POST", headers: { "apikey": CONFIG.SUPABASE_KEY, "Authorization": "Bearer " + tok } }).catch(function () {});
+    showLogin(); msg("loginMsg");
+  });
+
+  /* ---------- Formulár ---------- */
+  var today = ymd(new Date());
+  ["b-od", "b-do", "b-den"].forEach(function (id) { $(id).min = today; $(id).value = today; });
+  function mode() { return document.querySelector('input[name="mode"]:checked').value; }
+  document.querySelectorAll('input[name="mode"]').forEach(function (r) { r.addEventListener("change", function () {
+    $("daysRow").hidden = mode() !== "days"; $("partRow").hidden = mode() !== "part"; updatePreview();
+  }); });
+  document.querySelectorAll(".chip").forEach(function (c) { c.addEventListener("click", function () { $("b-dovod").value = c.textContent === "Iné" ? "" : c.textContent; $("b-dovod").focus(); }); });
+  $("b-od").addEventListener("change", function () { if ($("b-do").value < $("b-od").value) $("b-do").value = $("b-od").value; $("b-do").min = $("b-od").value; updatePreview(); });
+  ["b-do", "b-den", "b-cod", "b-cdo"].forEach(function (id) { $(id).addEventListener("input", updatePreview); });
+
+  function range() {
+    if (mode() === "days") {
+      var a = $("b-od").value, b = $("b-do").value;
+      if (!a || !b || b < a) return null;
+      return { from: a + " 00:00", to: addDays(b, 1) + " 00:00", text: a === b ? "celý deň " + nice(a) : "od " + nice(a) + " do " + nice(b) + " (vrátane)" };
+    }
+    var d = $("b-den").value, f = $("b-cod").value, t = $("b-cdo").value;
+    if (!d || !f || !t || t <= f) return null;
+    return { from: d + " " + f, to: d + " " + t, text: nice(d) + " od " + f + " do " + t };
+  }
+  function updatePreview() {
+    var r = range();
+    $("preview").innerHTML = r ? "Zablokuje sa: <strong>" + esc(r.text) + "</strong>" : "Skontrolujte dátumy, koniec musí byť po začiatku.";
+    $("addBtn").disabled = !r;
+  }
+  updatePreview();
+
+  $("blockForm").addEventListener("submit", function (e) {
+    e.preventDefault(); msg("addMsg");
+    var r = range(); if (!r) return;
+    var btn = $("addBtn"); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Ukladám...';
+    rpc("admin_add_block", { p_from: r.from, p_to: r.to, p_reason: $("b-dovod").value })
+      .then(function (res) {
+        var c = (res && res.conflicts) || [];
+        var html = '<div class="msg ok">Hotovo, zablokované: ' + esc(r.text) + ".</div>";
+        if (c.length) {
+          html += '<div class="msg warn"><strong>Pozor: v tomto čase ' + (c.length === 1 ? "už je rezervovaná 1 pacientka" : "už sú rezervované pacientky (" + c.length + ")") + ".</strong>Ich termín ostáva platný. Zavolajte im a dohodnite iný termín:<ul>" +
+            c.map(function (x) { return "<li>" + esc(x.termin) + ", " + esc(x.meno) + ", <a href=\"tel:" + esc(x.telefon) + "\">" + esc(x.telefon) + "</a></li>"; }).join("") + "</ul></div>";
+        }
+        $("addMsg").innerHTML = html;
+        loadList();
+      })
+      .catch(function (err) { handleErr(err, "addMsg"); })
+      .then(function () { btn.disabled = false; btn.textContent = "Zablokovať"; updatePreview(); });
+  });
+
+  /* ---------- Zoznam ---------- */
+  function describe(b) {
+    var fd = b.od.slice(0, 10), ft = b.od.slice(11), td = b["do"].slice(0, 10), tt = b["do"].slice(11);
+    if (ft === "00:00" && tt === "00:00") {
+      var last = addDays(td, -1);
+      return last === fd ? nice(fd) + ", celý deň" : nice(fd) + " - " + nice(last);
+    }
+    if (fd === td) return nice(fd) + ", " + ft + " - " + tt;
+    return nice(fd) + " " + ft + " - " + nice(td) + " " + tt;
+  }
+  function loadList() {
+    rpc("admin_list_blocks").then(function (rows) {
+      rows = rows || [];
+      if (!rows.length) { $("listWrap").innerHTML = '<div class="empty">Zatiaľ nie sú naplánované žiadne blokácie.</div>'; return; }
+      var nowStr = ymd(new Date()) + " " + pad(new Date().getHours()) + ":" + pad(new Date().getMinutes());
+      $("listWrap").innerHTML = '<ul class="list">' + rows.map(function (b) {
+        var now = b.od <= nowStr;
+        return '<li class="item' + (now ? " now" : "") + '"><div><div class="item-when">' + esc(describe(b)) + (now ? '<span class="tag">prebieha</span>' : "") + '</div><div class="item-meta">' + esc(b.reason || "Bez dôvodu") + '</div></div>' +
+          '<button type="button" class="btn btn-del btn-sm" data-id="' + esc(b.id) + '" data-text="' + esc(describe(b)) + '">Zrušiť</button></li>';
+      }).join("") + "</ul>";
+    }).catch(function (err) { handleErr(err, "listWrap"); });
+  }
+  $("listWrap").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-id]"); if (!b) return;
+    if (b.getAttribute("data-confirm") !== "1") {
+      // dvojklik namiesto confirm() dialógu
+      b.setAttribute("data-confirm", "1"); b.textContent = "Naozaj zrušiť?";
+      setTimeout(function () { if (b.isConnected) { b.removeAttribute("data-confirm"); b.textContent = "Zrušiť"; } }, 4000);
+      return;
+    }
+    b.disabled = true; b.innerHTML = '<span class="spinner dark"></span>';
+    rpc("admin_delete_block", { p_id: b.getAttribute("data-id") }).then(loadList).catch(function (err) { handleErr(err, "listWrap"); });
+  });
+
+  /* ---------- Štart ---------- */
+  if (!BASE || !CONFIG.SUPABASE_KEY) { msg("loginMsg", "err", "Chýba SUPABASE_URL alebo SUPABASE_KEY v nastaveniach stránky."); return; }
+  session = loadSession();
+  if (session && session.refresh_token) ensureToken().then(showApp).catch(function () { showLogin(); });
+})();
+</script>
+</body>
+</html>
