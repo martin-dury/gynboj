@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Rezervácie | GYNBOJ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFF9F8; --blush: #F6E1DE; --blush-2: #FBEEEC; --lilac: #ECE4EF;
+  --ink: #2D1B2A; --ink-2: #5A4757; --muted: #86737F; --line: #EAD7D4;
+  --berry: #8E2E5B; --berry-dark: #6F1F45; --sage: #4F7D62; --sage-soft: #DDEBE1; --white: #FFFFFF;
+  --off-bg: #F1ECEE; --err: #B3261E; --err-bg: #FBE3E1;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --text: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gut: clamp(16px, 4vw, 40px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 17px; line-height: 1.5; overflow-x: hidden; }
+:focus-visible { outline: 3px solid var(--berry); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+p { margin: 0; }
+[hidden] { display: none !important; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 var(--gut); }
+
+/* Hlavička + záložky */
+.top { border-bottom: 1px solid var(--line); background: rgba(255,249,248,.95); position: sticky; top: 0; z-index: 10; }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 70px; }
+.brand { display: flex; align-items: baseline; gap: 12px; text-decoration: none; color: inherit; }
+.brand-mark { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: 28px; color: var(--berry); line-height: 1; }
+.tabs { display: flex; gap: 4px; background: var(--blush-2); border-radius: 999px; padding: 4px; }
+.tabs a { text-decoration: none; padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 15px; color: var(--ink-2); white-space: nowrap; }
+.tabs a:hover { color: var(--ink); }
+.tabs a[aria-current="page"] { background: var(--berry); color: #fff; }
+.who { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--ink-2); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 20px; font: 700 16px/1.2 var(--text); text-decoration: none; border-radius: 999px; border: 2px solid transparent; cursor: pointer; transition: background-color .15s, border-color .15s, color .15s; }
+.btn-primary { background: var(--berry); color: #fff; }
+.btn-primary:hover { background: var(--berry-dark); }
+.btn-primary:disabled { opacity: .5; cursor: wait; }
+.btn-soft { background: var(--white); color: var(--ink); border-color: var(--line); }
+.btn-soft:hover { border-color: var(--ink); }
+.btn-sm { min-height: 38px; padding: 5px 14px; font-size: 14.5px; }
+.btn-del { background: var(--white); color: var(--err); border-color: #F0C2BE; }
+.btn-del:hover { background: var(--err-bg); }
+.btn-add { background: transparent; color: var(--berry); border: 2px dashed #D9B3C5; }
+.btn-add:hover { background: var(--blush-2); border-style: solid; }
+.icon-btn { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; display: grid; place-items: center; flex: none; }
+.icon-btn:hover { border-color: var(--ink); }
+
+main { padding: clamp(28px, 4vw, 44px) 0 64px; }
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 28px; padding: clamp(18px, 3vw, 30px); position: relative; }
+.card + .card { margin-top: 22px; }
+.card h2 { font-size: clamp(24px, 2.8vw, 30px); font-stretch: 82%; }
+.sub { color: var(--muted); font-size: 15.5px; margin-top: 6px; }
+
+/* Prihlásenie */
+.login { max-width: 460px; }
+.form { display: grid; gap: 16px; margin-top: 18px; }
+.field label { display: block; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+.field label small { font-weight: 400; color: var(--muted); }
+.input { width: 100%; min-height: 48px; padding: 10px 14px; font: 16.5px/1.3 var(--text); color: var(--ink); background: var(--white); border: 2px solid var(--line); border-radius: 12px; }
+.input:hover { border-color: #D8BEBA; }
+.input:focus { outline: none; border-color: var(--berry); box-shadow: 0 0 0 4px rgba(142,46,91,.14); }
+select.input { cursor: pointer; }
+.msg { border-radius: 14px; padding: 12px 16px; font-size: 15.5px; margin-top: 14px; font-weight: 700; }
+.msg.ok { background: var(--sage-soft); color: #2F5D42; }
+.msg.err { background: var(--err-bg); color: #8C1D18; }
+.msg.info { background: var(--lilac); color: var(--ink-2); font-weight: 400; }
+
+/* Výber dňa */
+.daybar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.daybar .input { width: auto; min-width: 170px; cursor: pointer; }
+.daybar .grow { flex: 1; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--ink-2); cursor: pointer; }
+.toggle input { width: 20px; height: 20px; accent-color: var(--berry); margin: 0; }
+
+.dayhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 20px; margin: 22px 0 16px; }
+.dayhead h2 { text-transform: none; }
+.dayhead h2::first-letter { text-transform: uppercase; }
+.hours { color: var(--muted); font-size: 15.5px; margin-top: 4px; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 14.5px; }
+.stat.b { background: var(--berry); color: #fff; }
+.stat.f { background: var(--sage-soft); color: #2F5D42; }
+.stat.x { background: var(--off-bg); color: var(--ink-2); }
+
+/* Rozvrh */
+.slots { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.slot { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; border-radius: 16px; padding: 8px 12px; }
+.time { font-family: var(--display); font-weight: 700; font-stretch: 85%; font-size: 21px; font-variant-numeric: tabular-nums; }
+.slot.free { background: var(--white); border: 1px dashed var(--line); }
+.slot.free .time { color: var(--muted); }
+.slot.free .what { color: var(--muted); font-size: 15px; }
+.slot.past { opacity: .55; }
+.slot.blocked { background: var(--off-bg); }
+.slot.blocked .time, .slot.blocked .what { color: var(--muted); }
+.slot.blocked .what { font-size: 15px; font-weight: 700; }
+.slot.booked { background: var(--blush-2); border-left: 5px solid var(--berry); padding: 14px 14px 14px 12px; align-items: start; }
+.slot.booked .time { color: var(--berry); }
+.name { font-weight: 700; font-size: 18px; line-height: 1.3; }
+.tag { display: inline-block; border-radius: 999px; font-size: 12.5px; font-weight: 700; padding: 2px 10px; margin-left: 6px; vertical-align: 2px; }
+.tag.web { background: var(--sage-soft); color: #2F5D42; }
+.tag.tel { background: var(--lilac); color: var(--ink-2); }
+.reason { margin-top: 3px; color: var(--ink-2); font-size: 15.5px; }
+.contact { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 6px; font-size: 15.5px; }
+.contact a { color: var(--berry); font-weight: 700; text-underline-offset: 3px; word-break: break-all; }
+.note { margin-top: 8px; background: var(--white); border-radius: 10px; padding: 8px 12px; font-size: 15px; color: var(--ink-2); }
+.meta { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.closed { background: var(--off-bg); border-radius: 18px; padding: 18px 20px; color: var(--ink-2); margin-bottom: 12px; }
+.closed strong { display: block; color: var(--ink); font-size: 18px; margin-bottom: 2px; }
+
+/* Formulár pridania */
+.addform { grid-column: 1 / -1; background: var(--lilac); border-radius: 16px; padding: 16px; display: grid; gap: 12px; margin-top: 4px; }
+.addform .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.addform .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.addform .hint { font-size: 14px; color: var(--ink-2); }
+
+.spinner { width: 22px; height: 22px; border-radius: 50%; border: 3px solid var(--blush); border-top-color: var(--berry); animation: spin .8s linear infinite; }
+.btn-primary .spinner { border-color: rgba(255,255,255,.35); border-top-color: #fff; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading { display: flex; align-items: center; gap: 12px; color: var(--ink-2); padding: 18px 4px; }
+.updated { font-size: 13px; color: var(--muted); margin-top: 14px; text-align: right; }
+
+@media (max-width: 760px) {
+  .top-row { height: auto; padding: 10px 0; flex-wrap: wrap; }
+  .tabs { order: 3; width: 100%; }
+  .tabs a { flex: 1; text-align: center; }
+  .who span { display: none; }
+  .slot { grid-template-columns: 54px minmax(0, 1fr); }
+  .slot > .act { grid-column: 2; justify-self: start; }
+  .addform .row { grid-template-columns: 1fr; }
+  .daybar .input { flex: 1 1 100%; order: -1; min-width: 0; }
+  .daybar .grow { display: none; }
+}
+@media print {
+  .top, .daybar, .act, .slot.free, .slot.blocked, .stat.f, .stat.x, .updated, #msg, .no-print { display: none !important; }
+  body { background: #fff; font-size: 12pt; }
+  main { padding: 0; }
+  .card { border: 0; padding: 0; }
+  .slot { break-inside: avoid; }
+  .slot.booked { background: #fff; border: 1px solid #ccc; border-left: 4px solid #000; }
+  .contact a { color: #000; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="index.html"><span class="brand-mark">GYNBOJ</span></a>
+    <nav class="tabs" aria-label="Správa ambulancie">
+      <a href="rezervacie.html" aria-current="page">Rezervácie</a>
+      <a href="dovolenka.html">Dovolenky</a>
+    </nav>
+    <div class="who" id="who" hidden><span id="whoEmail"></span><button type="button" class="btn btn-soft btn-sm" id="logoutBtn">Odhlásiť</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- PRIHLÁSENIE -->
+  <section class="card login" id="loginCard">
+    <h2>Prihlásenie</h2>
+    <p class="sub">Len pre personál ambulancie.</p>
+    <form class="form" id="loginForm">
+      <div class="field"><label for="l-email">E-mail</label><input class="input" id="l-email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="l-pass">Heslo</label><input class="input" id="l-pass" type="password" autocomplete="current-password" required></div>
+      <button class="btn btn-primary" id="loginBtn" type="submit">Prihlásiť sa</button>
+    </form>
+    <div id="loginMsg"></div>
+  </section>
+
+  <!-- PREHĽAD DŇA -->
+  <section class="card" id="app" hidden>
+    <div class="daybar">
+      <button type="button" class="icon-btn" id="prevDay" aria-label="Predchádzajúci deň"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 2L2 8l6 6"/></svg></button>
+      <input type="date" class="input" id="dayInput" aria-label="Deň">
+      <button type="button" class="icon-btn" id="nextDay" aria-label="Nasledujúci deň"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 2l6 6-6 6"/></svg></button>
+      <button type="button" class="btn btn-soft btn-sm" id="todayBtn">Dnes</button>
+      <span class="grow"></span>
+      <label class="toggle"><input type="checkbox" id="showFree" checked> Voľné časy</label>
+      <button type="button" class="btn btn-soft btn-sm" id="printBtn">Vytlačiť</button>
+    </div>
+
+    <div class="dayhead">
+      <div>
+        <h2 id="dayTitle"></h2>
+        <p class="hours" id="dayHours"></p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+
+    <div id="msg"></div>
+    <div id="list"><div class="loading"><div class="spinner"></div>Načítavam...</div></div>
+    <p class="updated" id="updated"></p>
+  </section>
+</main>
+
+<script>
+/* Rovnaké údaje ako v objednanie.html a dovolenka.html */
+var CONFIG = {
+  SUPABASE_URL: "https://dhzetcgbkzwpcbopmvop.supabase.co/",   // napr. "https://abcdxyz.supabase.co"
+  SUPABASE_KEY: "sb_publishable_Fm8QRwGo_rwUUNfNzyUm9Q_KQIVdrk_",   // publishable / anon key
+  SLOT_MINUTES: 12,
+  // Ordinačné hodiny pre online termíny - MUSIA byť rovnaké ako v objednanie.html (1 = pondelok)
+  HOURS: {
+    1: ["07:00", "16:00"],
+    2: ["12:00", "18:00"],
+    3: ["10:36", "15:00"],
+    4: ["07:00", "17:30"]
+  },
+  IDLE_MINUTES: 30,     // odhlásenie po nečinnosti
+  REFRESH_SECONDS: 60   // automatické obnovenie prehľadu
+};
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var BASE = CONFIG.SUPABASE_URL.replace(/\/+$/, "").replace(/\/rest\/v1$/, "");
+  var SKEY = "gynboj_admin_session", IDLE_KEY = "gynboj_admin_last";
+  var session = null;
+  var MONTHS_GEN = ["januára", "februára", "marca", "apríla", "mája", "júna", "júla", "augusta", "septembra", "októbra", "novembra", "decembra"];
+  var DOWS = ["nedeľa", "pondelok", "utorok", "streda", "štvrtok", "piatok", "sobota"];
+  var REASONS = ["Preventívna prehliadka", "Tehotenská poradňa", "Kontrola plánovaná lekárom", "Subjektívne ťažkosti"];
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function ymd(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function parseYmd(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function addDays(s, n) { var d = parseYmd(s); d.setDate(d.getDate() + n); return ymd(d); }
+  function toMin(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+  function fromMin(m) { return pad(Math.floor(m / 60)) + ":" + pad(m % 60); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function msg(el, kind, html) { $(el).innerHTML = html ? '<div class="msg ' + kind + '">' + html + "</div>" : ""; }
+  function nowKey() { var d = new Date(); return ymd(d) + " " + pad(d.getHours()) + ":" + pad(d.getMinutes()); }
+
+  /* ---------- Sviatky SR (rovnaké ako v objednanie.html) ---------- */
+  function easter(y) {
+    var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
+        h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451),
+        mo = Math.floor((h + l - 7 * m + 114) / 31), da = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(y, mo - 1, da);
+  }
+  function isHoliday(s) {
+    var y = +s.slice(0, 4), md = s.slice(5);
+    var list = ["01-01", "01-06", "05-01", "07-05", "08-29", "11-01", "12-24", "12-25", "12-26"];
+    if (y !== 2026) list.push("05-08", "09-15");
+    if (list.indexOf(md) > -1) return true;
+    var e = easter(y), gf = new Date(e), em = new Date(e);
+    gf.setDate(e.getDate() - 2); em.setDate(e.getDate() + 1);
+    return s === ymd(gf) || s === ymd(em);
+  }
+  function gridFor(s) {
+    var h = CONFIG.HOURS[parseYmd(s).getDay()]; if (!h) return [];
+    var out = [], end = toMin(h[1]);
+    for (var m = toMin(h[0]); m + CONFIG.SLOT_MINUTES <= end; m += CONFIG.SLOT_MINUTES) out.push(fromMin(m));
+    return out;
+  }
+
+  /* ---------- Prihlásenie (zdieľané s dovolenka.html) ---------- */
+  function saveSession(s) { session = s; try { if (s) localStorage.setItem(SKEY, JSON.stringify(s)); else localStorage.removeItem(SKEY); } catch (e) {} }
+  function loadSession() { try { return JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) { return null; } }
+  function touch() { try { localStorage.setItem(IDLE_KEY, String(Date.now())); } catch (e) {} }
+  function idleExpired() { try { var t = +localStorage.getItem(IDLE_KEY); return t > 0 && Date.now() - t > CONFIG.IDLE_MINUTES * 60000; } catch (e) { return false; } }
+
+  function authCall(grant, body) {
+    return fetch(BASE + "/auth/v1/token?grant_type=" + grant, {
+      method: "POST", headers: { "Content-Type": "application/json", "apikey": CONFIG.SUPABASE_KEY }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error_description || j.msg || j.message || "AUTH"); return j; }); })
+      .then(function (j) { var s = { access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Date.now() + (j.expires_in - 60) * 1000, email: j.user && j.user.email }; saveSession(s); return s; });
+  }
+  function ensureToken() {
+    if (!session) return Promise.reject(new Error("NO_SESSION"));
+    if (Date.now() < session.expires_at) return Promise.resolve(session.access_token);
+    return authCall("refresh_token", { refresh_token: session.refresh_token }).then(function (s) { return s.access_token; });
+  }
+  function rpc(fn, body) {
+    return ensureToken().then(function (tok) {
+      return fetch(BASE + "/rest/v1/rpc/" + fn, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apikey": CONFIG.SUPABASE_KEY, "Authorization": "Bearer " + tok },
+        body: JSON.stringify(body || {})
+      });
+    }).then(function (r) { return r.text().then(function (t) { var j = t ? JSON.parse(t) : null; if (!r.ok) throw new Error((j && j.message) || ("HTTP " + r.status)); return j; }); });
+  }
+
+  function showApp() {
+    $("loginCard").hidden = true; $("app").hidden = false; $("who").hidden = false;
+    $("whoEmail").textContent = session.email || "";
+    load();
+  }
+  function logout(text) {
+    var tok = session && session.access_token;
+    if (tok) fetch(BASE + "/auth/v1/logout", { method: "POST", headers: { "apikey": CONFIG.SUPABASE_KEY, "Authorization": "Bearer " + tok } }).catch(function () {});
+    showLogin(text);
+  }
+  function showLogin(text) {
+    saveSession(null);
+    $("loginCard").hidden = false; $("app").hidden = true; $("who").hidden = true;
+    $("list").innerHTML = "";
+    msg("loginMsg", "err", text || "");
+  }
+  function handleErr(e, where) {
+    var m = String(e && e.message || "");
+    if (m.indexOf("NOT_ADMIN") > -1) return showLogin("Tento účet nemá oprávnenie na prehľad rezervácií.");
+    if (m.indexOf("JWT") > -1 || m.indexOf("NO_SESSION") > -1 || m.indexOf("refresh") > -1) return showLogin("Prihlásenie vypršalo, prihláste sa znova.");
+    msg(where, "err", "Niečo sa nepodarilo (" + esc(m) + "). Skúste to znova.");
+  }
+
+  $("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); msg("loginMsg");
+    var btn = $("loginBtn"); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Prihlasujem...';
+    authCall("password", { email: $("l-email").value.trim(), password: $("l-pass").value })
+      .then(function () { $("l-pass").value = ""; touch(); showApp(); })
+      .catch(function (err) { msg("loginMsg", "err", /invalid/i.test(err.message) ? "Nesprávny e-mail alebo heslo." : "Prihlásenie sa nepodarilo: " + esc(err.message)); })
+      .then(function () { btn.disabled = false; btn.textContent = "Prihlásiť sa"; });
+  });
+  $("logoutBtn").addEventListener("click", function () { logout(); });
+
+  // Odhlásenie po nečinnosti (platí spoločne pre obe stránky)
+  var lastTouch = 0;
+  ["click", "keydown", "touchstart", "scroll"].forEach(function (ev) {
+    window.addEventListener(ev, function () { if (session && Date.now() - lastTouch > 15000) { lastTouch = Date.now(); touch(); } }, { passive: true });
+  });
+  setInterval(function () { if (session && idleExpired()) logout("Boli ste odhlásená po " + CONFIG.IDLE_MINUTES + " minútach nečinnosti."); }, 30000);
+  // Odhlásenie v druhej karte / na druhej stránke
+  window.addEventListener("storage", function (e) { if (e.key === SKEY && !e.newValue && session) showLogin(); });
+
+  /* ---------- Prehľad dňa ---------- */
+  var day = ymd(new Date()), data = null, openForm = null;
+  try { $("showFree").checked = localStorage.getItem("gynboj_show_free") !== "0"; } catch (e) {}
+
+  function setDay(s) { day = s; openForm = null; $("dayInput").value = s; load(); }
+  $("prevDay").addEventListener("click", function () { setDay(addDays(day, -1)); });
+  $("nextDay").addEventListener("click", function () { setDay(addDays(day, 1)); });
+  $("todayBtn").addEventListener("click", function () { setDay(ymd(new Date())); });
+  $("dayInput").addEventListener("change", function () { if ($("dayInput").value) setDay($("dayInput").value); });
+  $("dayInput").addEventListener("click", function () { try { this.showPicker(); } catch (e) {} });
+  $("showFree").addEventListener("change", function () { try { localStorage.setItem("gynboj_show_free", this.checked ? "1" : "0"); } catch (e) {} render(); });
+  $("printBtn").addEventListener("click", function () { window.print(); });
+  $("dayInput").value = day;
+
+  function load(quiet) {
+    if (!quiet) { $("list").innerHTML = '<div class="loading"><div class="spinner"></div>Načítavam...</div>'; msg("msg"); }
+    var forDay = day;
+    return rpc("admin_list_appointments", { p_day: forDay }).then(function (res) {
+      if (forDay !== day) return;
+      data = res || { appointments: [], blocked: [] };
+      render();
+      $("updated").textContent = "Aktualizované o " + nowKey().slice(11);
+    }).catch(function (err) { handleErr(err, "msg"); if (!quiet) $("list").innerHTML = ""; });
+  }
+
+  function blockedReason(key) {
+    var b = (data.blocked || []);
+    for (var i = 0; i < b.length; i++) if (key >= b[i].from && key < b[i].to) return b[i].reason || "Zablokované";
+    return null;
+  }
+
+  function render() {
+    var d = parseYmd(day), dow = d.getDay(), h = CONFIG.HOURS[dow], holiday = isHoliday(day);
+    $("dayTitle").textContent = DOWS[dow] + " " + d.getDate() + ". " + MONTHS_GEN[d.getMonth()] + " " + d.getFullYear();
+    $("dayHours").textContent = h && !holiday ? "Online termíny " + h[0] + " - " + fromMin(toMin(h[1]) - CONFIG.SLOT_MINUTES) + ", po " + CONFIG.SLOT_MINUTES + " minútach" : "";
+    if (!data) return;
+
+    var byTime = {};
+    (data.appointments || []).forEach(function (a) { (byTime[a.time] = byTime[a.time] || []).push(a); });
+    var times = (holiday ? [] : gridFor(day)).slice();
+    Object.keys(byTime).forEach(function (t) { if (times.indexOf(t) < 0) times.push(t); });
+    times.sort();
+
+    var now = nowKey(), nBooked = 0, nFree = 0, nBlocked = 0, html = "";
+    if (!h || holiday) {
+      html += '<div class="closed"><strong>' + (holiday ? "Štátny sviatok" : "V tento deň sa neordinuje") + "</strong>" +
+        (times.length ? "Napriek tomu sú na tento deň zapísané tieto pacientky:" : "Žiadne rezervácie.") + "</div>";
+    }
+    html += '<ul class="slots">';
+    times.forEach(function (t) {
+      var key = day + " " + t, list = byTime[t];
+      if (list) {
+        list.forEach(function (a) {
+          nBooked++;
+          var tel = String(a.phone || "").replace(/[^\d+]/g, "");
+          html += '<li class="slot booked"><div class="time">' + t + "</div><div>" +
+            '<div class="name">' + esc(a.full_name) + (a.source === "telefon" ? '<span class="tag tel">Telefonicky</span>' : '<span class="tag web">Online</span>') + "</div>" +
+            '<div class="reason">' + esc(a.reason) + (a.extras && a.extras.length ? " · " + a.extras.map(esc).join(", ") : "") + "</div>" +
+            '<div class="contact"><a href="tel:' + esc(tel) + '">' + esc(a.phone) + "</a>" + (a.email ? '<a href="mailto:' + esc(a.email) + '">' + esc(a.email) + "</a>" : "") + "</div>" +
+            (a.note ? '<div class="note">' + esc(a.note) + "</div>" : "") +
+            '<div class="meta no-print">Zapísané ' + esc(a.created) + "</div>" +
+            '</div><div class="act"><button type="button" class="btn btn-del btn-sm" data-cancel="' + esc(a.id) + '" data-name="' + esc(a.full_name) + '">Zrušiť termín</button></div></li>';
+        });
+        return;
+      }
+      var br = blockedReason(key);
+      if (br) { nBlocked++; html += '<li class="slot blocked"><div class="time">' + t + '</div><div class="what">' + esc(br) + "</div></li>"; return; }
+      var past = key < now;
+      if (!past) nFree++;
+      if (!$("showFree").checked && openForm !== t) return;
+      html += '<li class="slot free' + (past ? " past" : "") + '"><div class="time">' + t + '</div><div class="what">' + (past ? "Neobsadené" : "Voľné") + "</div>" +
+        (past || openForm === t ? "" : '<div class="act"><button type="button" class="btn btn-add btn-sm" data-add="' + t + '">+ Pridať pacientku</button></div>') +
+        (openForm === t ? formHtml(t) : "") + "</li>";
+    });
+    html += "</ul>";
+    if (!times.length && h && !holiday) html = '<div class="closed"><strong>Žiadne časy</strong>Pre tento deň nie sú nastavené ordinačné hodiny.</div>';
+    $("list").innerHTML = html;
+
+    $("stats").innerHTML = '<span class="stat b">' + nBooked + " objednan" + (nBooked === 1 ? "á" : (nBooked >= 2 && nBooked <= 4 ? "é" : "ých")) + "</span>" +
+      (h && !holiday ? '<span class="stat f">' + nFree + " voľn" + (nFree === 1 ? "ý" : (nFree >= 2 && nFree <= 4 ? "é" : "ých")) + "</span>" : "") +
+      (nBlocked ? '<span class="stat x">' + nBlocked + " zablokovan" + (nBlocked === 1 ? "ý" : (nBlocked >= 2 && nBlocked <= 4 ? "é" : "ých")) + "</span>" : "");
+
+    if (openForm) { var f = $("a-meno"); if (f && !f.value) f.focus({ preventScroll: true }); }
+  }
+
+  function formHtml(t) {
+    return '<form class="addform" id="addForm" data-time="' + t + '">' +
+      '<div class="hint"><strong>Telefonická objednávka na ' + t + '.</strong> Čas sa hneď zablokuje aj na webe.</div>' +
+      '<div class="row"><div class="field"><label for="a-meno">Meno a priezvisko</label><input class="input" id="a-meno" required></div>' +
+      '<div class="field"><label for="a-tel">Telefón</label><input class="input" id="a-tel" type="tel" inputmode="tel" required></div></div>' +
+      '<div class="row"><div class="field"><label for="a-dovod">Dôvod návštevy</label><select class="input" id="a-dovod">' + REASONS.map(function (r) { return "<option>" + r + "</option>"; }).join("") + "</select></div>" +
+      '<div class="field"><label for="a-email">E-mail <small>(nepovinné, príde jej potvrdenie)</small></label><input class="input" id="a-email" type="email"></div></div>' +
+      '<div class="field"><label for="a-note">Poznámka <small>(nepovinné)</small></label><input class="input" id="a-note" maxlength="1000"></div>' +
+      '<div class="acts"><button type="submit" class="btn btn-primary btn-sm" id="addSave">Uložiť</button><button type="button" class="btn btn-soft btn-sm" data-closeform="1">Zrušiť</button></div>' +
+      '<div id="addMsg"></div></form>';
+  }
+
+  $("list").addEventListener("click", function (e) {
+    var add = e.target.closest("[data-add]");
+    if (add) { openForm = add.getAttribute("data-add"); render(); return; }
+    if (e.target.closest("[data-closeform]")) { openForm = null; render(); return; }
+    var c = e.target.closest("[data-cancel]");
+    if (c) {
+      if (c.getAttribute("data-confirm") !== "1") {
+        c.setAttribute("data-confirm", "1"); c.textContent = "Naozaj zrušiť?";
+        setTimeout(function () { if (c.isConnected) { c.removeAttribute("data-confirm"); c.textContent = "Zrušiť termín"; } }, 4000);
+        return;
+      }
+      c.disabled = true; c.innerHTML = '<span class="spinner"></span>';
+      var name = c.getAttribute("data-name");
+      rpc("admin_cancel_appointment", { p_id: c.getAttribute("data-cancel") })
+        .then(function () { return load(true); })
+        .then(function () { msg("msg", "ok", "Termín pacientky " + esc(name) + " je zrušený a čas je znova voľný. Pacientke to neoznamujeme automaticky."); })
+        .catch(function (err) { handleErr(err, "msg"); });
+    }
+  });
+
+  $("list").addEventListener("submit", function (e) {
+    if (e.target.id !== "addForm") return;
+    e.preventDefault();
+    var t = e.target.getAttribute("data-time");
+    var name = $("a-meno").value.trim(), tel = $("a-tel").value.trim(), mail = $("a-email").value.trim();
+    if (name.length < 3) { msg("addMsg", "err", "Zadajte meno a priezvisko."); $("a-meno").focus(); return; }
+    if (tel.replace(/[^\d]/g, "").length < 9) { msg("addMsg", "err", "Zadajte telefón (aspoň 9 číslic)."); $("a-tel").focus(); return; }
+    if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { msg("addMsg", "err", "E-mail nie je platný, opravte ho alebo nechajte prázdny."); $("a-email").focus(); return; }
+    var btn = $("addSave"); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Ukladám...';
+    rpc("admin_add_appointment", { p_slot: day + " " + t, p_full_name: name, p_phone: tel, p_email: mail || null, p_reason: $("a-dovod").value, p_note: $("a-note").value.trim() || null })
+      .then(function () { openForm = null; return load(true); })
+      .then(function () { msg("msg", "ok", "Pacientka " + esc(name) + " je zapísaná na " + t + "." + (mail ? " Potvrdenie jej príde e-mailom." : "")); })
+      .catch(function (err) {
+        if (String(err.message).indexOf("SLOT_TAKEN") > -1) { openForm = null; msg("msg", "err", "Čas " + t + " si medzičasom niekto rezervoval online. Vyberte iný čas."); load(true); return; }
+        btn.disabled = false; btn.textContent = "Uložiť"; handleErr(err, "addMsg");
+      });
+  });
+
+  // Automatické obnovenie (nie počas vypĺňania formulára)
+  setInterval(function () { if (session && !$("app").hidden && !openForm && !document.hidden) load(true); }, CONFIG.REFRESH_SECONDS * 1000);
+
+  /* ---------- Štart ---------- */
+  if (!BASE || !CONFIG.SUPABASE_KEY) { msg("loginMsg", "err", "Chýba SUPABASE_URL alebo SUPABASE_KEY v nastaveniach stránky."); return; }
+  session = loadSession();
+  if (session && idleExpired()) { logout("Boli ste odhlásená po " + CONFIG.IDLE_MINUTES + " minútach nečinnosti."); return; }
+  if (session && session.refresh_token) ensureToken().then(function () { touch(); showApp(); }).catch(function () { showLogin(); });
+})();
+</script>
+</body>
+</html>
